@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tower
+    uniqueID: 3088667041
+    locked: 0
+  - name: Wizard
+    uniqueID: 1997646537
+    locked: 0
+  - name: Bush
+    uniqueID: 1129108143
+    locked: 0
