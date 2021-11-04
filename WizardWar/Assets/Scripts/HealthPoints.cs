@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class HealthPoints : MonoBehaviour
 {
-    [SerializeField] int hp = 50;
+    [SerializeField] private int maxHp = 50;
+
+    private int hp;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +17,32 @@ public class HealthPoints : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        hp = maxHp;
+    }
+
+    public void getHealed(int points)
+    {
+        if(hp < maxHp)
+        {
+            hp += points;
+            if(hp > maxHp)
+            {
+                hp = maxHp;
+            }
+        }
+    }
+
+    public void getDamaged(int points)
+    {
+        hp -= points;
+    }
+
+    public void die()
+    {
+        gameObject.SetActive(false);
     }
 }
