@@ -8,7 +8,6 @@ public abstract class WizardState : MonoBehaviour
     protected GameObject[] towerList;
     protected GameObject[] greenTowerList;
     protected GameObject[] blueTowerList;
-    // /* to delete for test only */protected GameObject ennemy;
     protected GameObject[] ennemyList;
     protected GameObject[] greenWizardList;
     protected GameObject[] blueWizardList;
