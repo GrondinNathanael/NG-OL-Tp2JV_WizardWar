@@ -22,17 +22,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float longestSpawnCooldown = 8f;
 
     private GameObject[] blueWizardList;
-    private float currentBlueSpawnCooldown;
+    private float currentBlueSpawnCooldown = 0;
     private GameObject[] greenWizardList;
-    private float currentGreenSpawnCooldown;
+    private float currentGreenSpawnCooldown = 0;
     private enum ColorsWinSide { Blue, Green, None };
     private ColorsWinSide winningTeam = ColorsWinSide.None;
 
     // Start is called before the first frame update
     void Start()
     {
-        setRandomSpawnCooldown(currentBlueSpawnCooldown);
-        setRandomSpawnCooldown(currentGreenSpawnCooldown);
+        currentBlueSpawnCooldown = setRandomSpawnCooldown(currentBlueSpawnCooldown);
+        currentGreenSpawnCooldown = setRandomSpawnCooldown(currentGreenSpawnCooldown);
         setWizardsList(blueWizardList, blueWizard);
         setWizardsList(greenWizardList, greenWizard);
     }
@@ -61,14 +61,27 @@ public class GameManager : MonoBehaviour
             endGame(winningTeam);
         }
 
-        spawnWizard(blueTowers, blueWizardList);
-        spawnWizard(greenTowers, greenWizardList);
-        
+        currentBlueSpawnCooldown -= Time.deltaTime;
+        currentGreenSpawnCooldown -= Time.deltaTime;
+
+        if(currentBlueSpawnCooldown <= 0)
+        {
+            spawnWizard(blueTowers, blueWizardList);
+            currentBlueSpawnCooldown = setRandomSpawnCooldown(currentBlueSpawnCooldown);
+        }
+        if (currentGreenSpawnCooldown <= 0)
+        {
+            spawnWizard(greenTowers, greenWizardList);
+            currentGreenSpawnCooldown = setRandomSpawnCooldown(currentGreenSpawnCooldown);
+        }
+        Debug.Log("currentBlueSpawnCooldown: " + currentBlueSpawnCooldown);
+        Debug.Log("currentGreenSpawnCooldown: " + currentGreenSpawnCooldown);
     }
 
-    private void setRandomSpawnCooldown(float cooldown)
+    private float setRandomSpawnCooldown(float cooldown)
     {
         cooldown = Random.Range(shortestSpawnCooldown, longestSpawnCooldown);
+        return cooldown;
     }
 
     private void setWizardsList(GameObject[] list, GameObject wizardPrefab)
@@ -130,7 +143,6 @@ public class GameManager : MonoBehaviour
 
     private void spawnWizard(List<GameObject> towers, GameObject[] wizards)
     {
-        //Debug.Log(blueWizardList);
         if (towers.Count > 0)
         {
             int nextWizard = getNextWizard(wizards);
