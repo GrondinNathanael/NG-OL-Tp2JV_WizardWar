@@ -5,27 +5,29 @@ using UnityEngine;
 public abstract class WizardState : MonoBehaviour
 {
     protected WizardManager wizardManager;
-    protected GameObject[] towerList;
-    protected GameObject[] greenTowerList;
-    protected GameObject[] blueTowerList;
-    protected GameObject[] ennemyList;
-    protected GameObject[] greenWizardList;
-    protected GameObject[] blueWizardList;
     protected float speed;
     protected bool isInBattle;
     protected int numberOfKills;
     protected float wizardRange;
-    protected enum WizardColors { GREEN, BLUE }
-    protected WizardColors wizardColor;
+    protected enum wizardColors { GREEN, BLUE};
+    protected string color;
+    protected string ennemyColor;
 
     // Start is called before the first frame update
     void Awake()
     {
         wizardManager = GetComponent<WizardManager>();
-        greenTowerList = GameObject.FindGameObjectsWithTag("TowerGreen");
-        blueTowerList = GameObject.FindGameObjectsWithTag("TowerBlue");
-        greenWizardList = GameObject.FindGameObjectsWithTag("WizardGreen");
-        blueWizardList = GameObject.FindGameObjectsWithTag("WizardBlue");
+        if (gameObject.tag == "WizardBlue")
+        {
+            color = "blue";
+            ennemyColor = "green";
+        }
+        else if (gameObject.tag == "WizardGreen") 
+        {
+            color = "green";
+            ennemyColor = "blue";
+        }
+
     }
 
     // Update is called once per frame

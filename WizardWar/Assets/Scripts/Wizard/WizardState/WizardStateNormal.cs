@@ -9,18 +9,6 @@ public class WizardStateNormal : WizardState
     // Start is called before the first frame update
     void Start()
     {
-        if (transform.tag == "WizardBlue")
-        {
-            towerList = greenTowerList;
-            wizardColor = WizardColors.BLUE;
-            ennemyList = greenWizardList;
-        }
-        else
-        {
-            towerList = blueTowerList;
-            wizardColor = WizardColors.GREEN;
-            ennemyList = blueWizardList;
-        }
         speed = 2f;
         wizardRange = 2f;
         isInBattle = false;
@@ -49,21 +37,20 @@ public class WizardStateNormal : WizardState
             return;
         }
 
-        for (int i = 0; i < towerList.Length; i++)
+        for (int i = 0; i < GameManager.instance.getTowerList(ennemyColor).Count; i++)
         {
-            if (towerList[i].activeSelf)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, towerList[i].transform.position, speed * Time.deltaTime);
-                return;
-            }
+
+            transform.position = Vector3.MoveTowards(transform.position, GameManager.instance.getTowerList(ennemyColor)[i].transform.position, speed * Time.deltaTime);
+            return;
+
         }
     }
 
     private void ManageIsInBattle()
     {
-        for (int i = 0; i < ennemyList.Length; i++)
+        for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
         {
-            if (Vector2.Distance(transform.position, ennemyList[i].transform.position) < wizardRange && ennemyList[i].activeSelf)
+            if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
             {
                 isInBattle = true;
                 return;

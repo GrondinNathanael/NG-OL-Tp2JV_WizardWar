@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [SerializeField] private Text nbBlueWizardText;
     [SerializeField] private Text nbGreenWizardText;
     [SerializeField] private Text blueWizardsWinsText;
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
     private float currentBlueSpawnCooldown;
     private GameObject[] greenWizardList;
     private float currentGreenSpawnCooldown;
-    private enum ColorsWinSide{ Blue, Green, None };
+    private enum ColorsWinSide { Blue, Green, None };
     private ColorsWinSide winningTeam = ColorsWinSide.None;
 
     // Start is called before the first frame update
@@ -33,6 +35,18 @@ public class GameManager : MonoBehaviour
         setRandomSpawnCooldown(currentGreenSpawnCooldown);
         setWizardsList(blueWizardList, blueWizard);
         setWizardsList(greenWizardList, greenWizard);
+    }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -49,6 +63,7 @@ public class GameManager : MonoBehaviour
 
         spawnWizard(blueTowers, blueWizardList);
         spawnWizard(greenTowers, greenWizardList);
+        
     }
 
     private void setRandomSpawnCooldown(float cooldown)
@@ -58,14 +73,34 @@ public class GameManager : MonoBehaviour
 
     private void setWizardsList(GameObject[] list, GameObject wizardPrefab)
     {
-        list = new GameObject[maxNbOfWizardPerSide];
-
-        for (int i = 0; i < maxNbOfWizardPerSide; i++)
+        if (wizardPrefab.tag == "WizardBlue")
         {
-            list[i] = Instantiate(wizardPrefab);
-            list[i].SetActive(false);
+            blueWizardList = new GameObject[maxNbOfWizardPerSide];
+
+            for (int i = 0; i < maxNbOfWizardPerSide; i++)
+            {
+                blueWizardList[i] = Instantiate(wizardPrefab);
+                blueWizardList[i].SetActive(false);
+            }
+
         }
+        else if (wizardPrefab.tag == "WizardGreen")
+        {
+            greenWizardList = new GameObject[maxNbOfWizardPerSide];
+
+            for (int i = 0; i < maxNbOfWizardPerSide; i++)
+            {
+                greenWizardList[i] = Instantiate(wizardPrefab);
+                greenWizardList[i].SetActive(false);
+
+            }
+
+        }
+
+
     }
+
+
 
     private void areOneSideTowersDestroyed()
     {
@@ -75,11 +110,11 @@ public class GameManager : MonoBehaviour
 
     private void endGame(ColorsWinSide winningTeam)
     {
-        if(winningTeam == ColorsWinSide.Blue)
+        if (winningTeam == ColorsWinSide.Blue)
         {
             blueWizardsWinsText.gameObject.SetActive(true);
         }
-        else if(winningTeam == ColorsWinSide.Green)
+        else if (winningTeam == ColorsWinSide.Green)
         {
             greenWizardsWinsText.gameObject.SetActive(true);
         }
@@ -87,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     private void removeTowerFromList(List<GameObject> towers)
     {
-        for(int i = 0; i < towers.Count; i++)
+        for (int i = 0; i < towers.Count; i++)
         {
             if (!towers[i].gameObject.activeSelf) towers.RemoveAt(i);
         }
@@ -95,7 +130,8 @@ public class GameManager : MonoBehaviour
 
     private void spawnWizard(List<GameObject> towers, GameObject[] wizards)
     {
-        if(towers.Count > 0)
+        //Debug.Log(blueWizardList);
+        if (towers.Count > 0)
         {
             int nextWizard = getNextWizard(wizards);
             if (nextWizard >= 0)
@@ -111,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     private int getNextWizard(GameObject[] wizards)
     {
+        
         for (int i = 0; i < maxNbOfWizardPerSide; i++)
         {
             if (!wizards[i].activeSelf) return i;
@@ -126,5 +163,32 @@ public class GameManager : MonoBehaviour
     public void changeGreenWizardNb(int greenWizardsNb)
     {
         nbGreenWizardText.text = greenWizardsNb.ToString();
+    }
+
+    public List<GameObject> getTowerList(string color)
+    {
+        if (color == "blue")
+        {
+            return blueTowers;
+        }
+        else if (color == "green")
+        {
+            return greenTowers;
+        }
+        return null;
+
+    }
+
+    public GameObject[] getEnnemyList(string color)
+    {
+        if (color == "blue")
+        {
+            return blueWizardList;
+        }
+        else if (color == "green")
+        {
+            return greenWizardList;
+        }
+        return null;
     }
 }
