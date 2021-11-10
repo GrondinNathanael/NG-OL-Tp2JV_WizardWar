@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
             spawnWizard(greenTowers, greenWizardList);
             currentGreenSpawnCooldown = setRandomSpawnCooldown(currentGreenSpawnCooldown);
         }
-        Debug.Log("currentBlueSpawnCooldown: " + currentBlueSpawnCooldown);
-        Debug.Log("currentGreenSpawnCooldown: " + currentGreenSpawnCooldown);
     }
 
     private float setRandomSpawnCooldown(float cooldown)
