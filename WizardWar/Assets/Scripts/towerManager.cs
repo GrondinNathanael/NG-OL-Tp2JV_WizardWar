@@ -8,7 +8,7 @@ public class towerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthPoints = GetComponent<HealthPoints>();   
+        healthPoints = GetComponent<HealthPoints>();
     }
 
     // Update is called once per frame
@@ -17,9 +17,9 @@ public class towerManager : MonoBehaviour
         manageDeath();
     }
 
-    private void manageDeath() 
+    private void manageDeath()
     {
-        if (healthPoints.hp <= 0) 
+        if (healthPoints.getHp() <= 0)
         {
             healthPoints.die();
         }

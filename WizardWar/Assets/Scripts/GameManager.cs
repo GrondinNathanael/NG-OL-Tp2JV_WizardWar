@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
             endGame(winningTeam);
         }
 
-        if(winningTeam == ColorsWinSide.None)
+        if (winningTeam == ColorsWinSide.None)
         {
             currentBlueSpawnCooldown -= Time.deltaTime;
             currentGreenSpawnCooldown -= Time.deltaTime;
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     private int getNextWizard(GameObject[] wizards)
     {
-        
+
         for (int i = 0; i < maxNbOfWizardPerSide; i++)
         {
             if (!wizards[i].activeSelf) return i;

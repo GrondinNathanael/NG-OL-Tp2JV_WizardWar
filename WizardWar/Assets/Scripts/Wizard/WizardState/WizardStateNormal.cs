@@ -2,18 +2,29 @@ using UnityEngine;
 
 public class WizardStateNormal : WizardState
 {
-
+    private const float WIZARD_BASE_SPEED = 2f;
+    private const float WIZARD_BASE_RANGE = 2f;
+    private const float WIZARD_BASE_RATE_OF_FIRE = 3f;
+    private const int WIZARD_MAX_ATTACK = 5;
+    private const int WIZARD_MIN_ATTACK = 1;
+    private const int WIZRAD_BASE_HEALTH_REGEN = 1;
+    private const float WIZARD_BASE_REGEN_RATE = 1f;
+    private const float FOREST_SPEED_REDUCTION = 0.5f;
+    private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
+    private float wizardBaseDamage;
 
     // Start is called before the first frame update
     void Start()
     {
-        speed = 2f;
-        wizardRange = 2f;
+        speed = WIZARD_BASE_SPEED;
+        wizardRange = WIZARD_BASE_RANGE;
         isInBattle = false;
-        wizardRateOfFire = 2f;
-        wizardDamage = Random.Range(1, 10);
-        wizardHealthRegenNumber = 1;
+        wizardRateOfFire = WIZARD_BASE_RATE_OF_FIRE;
+        wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
+        wizardHealthRegenNumber = WIZRAD_BASE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
+        isInForest = false;
+        wizardBaseDamage = wizardDamage;
     }
 
     // Update is called once per frame
@@ -40,7 +51,6 @@ public class WizardStateNormal : WizardState
         {
             return;
         }
-
 
         for (int i = 0; i < GameManager.instance.getTowerList(ennemyColor).Count; i++)
         {
@@ -83,7 +93,7 @@ public class WizardStateNormal : WizardState
     {
         if (isInBattle)
         {
-            if (wizardRateOfFire >= 3f)
+            if (wizardRateOfFire >= WIZARD_BASE_RATE_OF_FIRE)
             {
 
                 wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
@@ -102,7 +112,7 @@ public class WizardStateNormal : WizardState
 
     public override void ManageDeath()
     {
-        if (healthPoints.hp <= 0)
+        if (healthPoints.getHp() <= 0)
         {
             healthPoints.die();
             GameManager.instance.decreaseWizardNb(color);
@@ -113,7 +123,7 @@ public class WizardStateNormal : WizardState
     {
         if (!isInBattle)
         {
-            if (wizardHealthRegenRate >= 1)
+            if (wizardHealthRegenRate >= WIZARD_BASE_REGEN_RATE)
             {
                 healthPoints.getHealed(wizardHealthRegenNumber);
                 wizardHealthRegenRate = 0f;
@@ -123,5 +133,33 @@ public class WizardStateNormal : WizardState
                 wizardHealthRegenRate += Time.deltaTime;
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Bush")
+        {
+            decreaseWizardStatsInForest();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Bush")
+        {
+            resetWizardStats();
+        }
+    }
+
+    private void resetWizardStats()
+    {
+        speed = WIZARD_BASE_SPEED;
+        wizardDamage = wizardBaseDamage;
+    }
+
+    private void decreaseWizardStatsInForest()
+    {
+        speed *= FOREST_SPEED_REDUCTION;
+        wizardDamage *= WIZARD_DAMAGE_REDUCTION;
     }
 }
