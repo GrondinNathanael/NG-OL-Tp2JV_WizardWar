@@ -10,6 +10,7 @@ public class WizardManager : MonoBehaviour
     private List<GameObject> ennemyTowerList;
     private GameObject[] ennemyList;
     private List<GameObject> allyTowerList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,12 +26,13 @@ public class WizardManager : MonoBehaviour
             ennemyTowerList = gameManager.getTowerList(BLUE);
             ennemyList = gameManager.getEnnemyList(BLUE);
         }
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

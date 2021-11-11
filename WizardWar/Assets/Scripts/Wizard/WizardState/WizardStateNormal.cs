@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WizardStateNormal : WizardState
@@ -12,6 +10,8 @@ public class WizardStateNormal : WizardState
         speed = 2f;
         wizardRange = 2f;
         isInBattle = false;
+        wizardRateOfFire = 2f;
+        wizardDamage = Random.Range(1, 10);
     }
 
     // Update is called once per frame
@@ -50,9 +50,17 @@ public class WizardStateNormal : WizardState
     {
         for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
         {
-            if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
+            if (Vector2.Distance(transform.position, GameManager.instance.getTowerList(ennemyColor)[i].transform.position) < wizardRange)
             {
                 isInBattle = true;
+                wizardTarget = GameManager.instance.getTowerList(ennemyColor)[i];
+                return;
+            }
+
+            else if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
+            {
+                isInBattle = true;
+                wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
                 return;
             }
             else
@@ -66,7 +74,11 @@ public class WizardStateNormal : WizardState
     {
         if (isInBattle)
         {
-
+            wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+        }
+        else if (!wizardTarget.activeSelf || wizardTarget == null) 
+        {
+            isInBattle = false;
         }
     }
 }

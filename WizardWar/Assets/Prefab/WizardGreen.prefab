@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6309309781884097094}
   - component: {fileID: 3044772209657135896}
   - component: {fileID: 2908571913368564508}
+  - component: {fileID: 4753191487223878704}
   m_Layer: 0
   m_Name: WizardGreen
   m_TagString: WizardGreen
@@ -109,3 +110,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e223e44188bfb45b1fb76b1216bdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4753191487223878704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093084367329476035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed365a81815fe5c4db7319be9dacedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 50

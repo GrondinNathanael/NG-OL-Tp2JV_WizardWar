@@ -5,13 +5,17 @@ using UnityEngine;
 public abstract class WizardState : MonoBehaviour
 {
     protected WizardManager wizardManager;
+    protected HealthPoints healthPoints;
     protected float speed;
     protected bool isInBattle;
     protected int numberOfKills;
     protected float wizardRange;
+    protected float wizardRateOfFire;
+    protected int wizardDamage;
     protected enum wizardColors { GREEN, BLUE};
     protected string color;
     protected string ennemyColor;
+    protected GameObject wizardTarget;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +31,8 @@ public abstract class WizardState : MonoBehaviour
             color = "green";
             ennemyColor = "blue";
         }
+
+        healthPoints = GetComponent<HealthPoints>();
 
     }
 
