@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float shortestSpawnCooldown = 2f;
     [SerializeField] private float longestSpawnCooldown = 8f;
 
+    [SerializeField] private List<GameObject> leftForests;
+    [SerializeField] private List<GameObject> rightForests;
+
     private GameObject[] blueWizardList;
     private float currentBlueSpawnCooldown = 0;
     private GameObject[] greenWizardList;
@@ -187,11 +190,11 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> getTowerList(string color)
     {
-        if (color == "blue")
+        if (color == BLUE_COLOR)
         {
             return blueTowers;
         }
-        else if (color == "green")
+        else if (color == GREEN_COLOR)
         {
             return greenTowers;
         }
@@ -199,13 +202,26 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public List<GameObject> getForestList(string color)
+    {
+        if (color == BLUE_COLOR)
+        {
+            return leftForests;
+        }
+        else if (color == GREEN_COLOR)
+        {
+            return rightForests;
+        }
+        return null;
+    }
+
     public GameObject[] getEnnemyList(string color)
     {
-        if (color == "blue")
+        if (color == BLUE_COLOR)
         {
             return blueWizardList;
         }
-        else if (color == "green")
+        else if (color == GREEN_COLOR)
         {
             return greenWizardList;
         }
@@ -214,12 +230,12 @@ public class GameManager : MonoBehaviour
 
     public void increaseWizardNb(string color)
     {
-        if (color == "blue")
+        if (color == BLUE_COLOR)
         {
             blueWizardNb++;
             changeBlueWizardNb(blueWizardNb);
         }
-        else if (color == "green")
+        else if (color == GREEN_COLOR)
         {
             greenWizardNb++;
             changeGreenWizardNb(greenWizardNb);
@@ -228,15 +244,24 @@ public class GameManager : MonoBehaviour
 
     public void decreaseWizardNb(string color)
     {
-        if (color == "blue")
+        if (color == BLUE_COLOR)
         {
             blueWizardNb--;
             changeBlueWizardNb(blueWizardNb);
         }
-        else if (color == "green")
+        else if (color == GREEN_COLOR)
         {
             greenWizardNb--;
             changeGreenWizardNb(greenWizardNb);
         }
+    }
+
+    public bool didSomeoneWin()
+    {
+        if(winningTeam != ColorsWinSide.None)
+        {
+            return true;
+        }
+        return false;
     }
 }
