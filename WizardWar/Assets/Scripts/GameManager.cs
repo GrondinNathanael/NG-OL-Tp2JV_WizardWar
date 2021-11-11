@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private const string BLUE_COLOR = "blue";
+    private const string GREEN_COLOR = "green";
     public static GameManager instance;
 
     [SerializeField] private Text nbBlueWizardText;
@@ -27,6 +29,9 @@ public class GameManager : MonoBehaviour
     private float currentGreenSpawnCooldown = 0;
     private enum ColorsWinSide { Blue, Green, None };
     private ColorsWinSide winningTeam = ColorsWinSide.None;
+
+    private int blueWizardNb = 0;
+    private int greenWizardNb = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -61,18 +66,23 @@ public class GameManager : MonoBehaviour
             endGame(winningTeam);
         }
 
-        currentBlueSpawnCooldown -= Time.deltaTime;
-        currentGreenSpawnCooldown -= Time.deltaTime;
+        if(winningTeam == ColorsWinSide.None)
+        {
+            currentBlueSpawnCooldown -= Time.deltaTime;
+            currentGreenSpawnCooldown -= Time.deltaTime;
 
-        if(currentBlueSpawnCooldown <= 0)
-        {
-            spawnWizard(blueTowers, blueWizardList);
-            currentBlueSpawnCooldown = setRandomSpawnCooldown(currentBlueSpawnCooldown);
-        }
-        if (currentGreenSpawnCooldown <= 0)
-        {
-            spawnWizard(greenTowers, greenWizardList);
-            currentGreenSpawnCooldown = setRandomSpawnCooldown(currentGreenSpawnCooldown);
+            if (currentBlueSpawnCooldown <= 0)
+            {
+                spawnWizard(blueTowers, blueWizardList);
+                currentBlueSpawnCooldown = setRandomSpawnCooldown(currentBlueSpawnCooldown);
+                increaseWizardNb(BLUE_COLOR);
+            }
+            if (currentGreenSpawnCooldown <= 0)
+            {
+                spawnWizard(greenTowers, greenWizardList);
+                currentGreenSpawnCooldown = setRandomSpawnCooldown(currentGreenSpawnCooldown);
+                increaseWizardNb(GREEN_COLOR);
+            }
         }
     }
 
@@ -200,5 +210,33 @@ public class GameManager : MonoBehaviour
             return greenWizardList;
         }
         return null;
+    }
+
+    public void increaseWizardNb(string color)
+    {
+        if (color == "blue")
+        {
+            blueWizardNb++;
+            changeBlueWizardNb(blueWizardNb);
+        }
+        else if (color == "green")
+        {
+            greenWizardNb++;
+            changeGreenWizardNb(greenWizardNb);
+        }
+    }
+
+    public void decreaseWizardNb(string color)
+    {
+        if (color == "blue")
+        {
+            blueWizardNb--;
+            changeBlueWizardNb(blueWizardNb);
+        }
+        else if (color == "green")
+        {
+            greenWizardNb--;
+            changeGreenWizardNb(greenWizardNb);
+        }
     }
 }

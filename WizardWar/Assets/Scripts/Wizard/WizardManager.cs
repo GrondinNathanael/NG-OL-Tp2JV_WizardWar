@@ -11,9 +11,16 @@ public class WizardManager : MonoBehaviour
     private GameObject[] ennemyList;
     private List<GameObject> allyTowerList;
 
+    public enum WizardStateToSwitch { Normal, Intrepid, Flee, Hiding, Safe, Inactive }
+    private WizardState wizardState;
+
+    private Transform forestInContact = null;
+    private Transform towerInContact = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        wizardState = GetComponent<WizardState>();
         if (transform.tag == "WizardBlue")
         {
             allyTowerList = gameManager.getTowerList(BLUE);
@@ -34,5 +41,79 @@ public class WizardManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void ChangeWizardState(WizardStateToSwitch nextState)
+    {
+        Destroy(wizardState);
+
+        switch (nextState)
+        {
+            case WizardStateToSwitch.Normal:
+                {
+                    wizardState = gameObject.AddComponent<WizardStateNormal>() as WizardStateNormal;
+                    break;
+                }
+            case WizardStateToSwitch.Intrepid:
+                {
+                    //wizardState = gameObject.AddComponent<WizardStateIntrepid>() as WizardStateIntrepid;
+                    break;
+                }
+            case WizardStateToSwitch.Flee:
+                {
+                    //wizardState = gameObject.AddComponent<WizardStateFlee>() as WizardStateFlee;
+                    break;
+                }
+            case WizardStateToSwitch.Hiding:
+                {
+                    //wizardState = gameObject.AddComponent<WizardStateHiding>() as WizardStateHiding;
+                    break;
+                }
+            case WizardStateToSwitch.Safe:
+                {
+                    //wizardState = gameObject.AddComponent<WizardStateSafe>() as WizardStateSafe;
+                    break;
+                }
+            case WizardStateToSwitch.Inactive:
+                {
+                    //wizardState = gameObject.AddComponent<WizardStateInactive>() as WizardStateInactive;
+                    break;
+                }
+        }
+    }
+
+    public Transform getForestInContact()
+    {
+        return forestInContact;
+    }
+
+    public void quitForest()
+    {
+        forestInContact = null;
+    }
+
+    public Transform getTowerInContact()
+    {
+        return forestInContact;
+    }
+
+    public void quitTower()
+    {
+        forestInContact = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Bush")
+            forestInContact = other.transform;
+        if (other.gameObject.tag == "Tower")
+            towerInContact = other.transform;
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Bush")
+            forestInContact = null;
+        if (other.gameObject.tag == "Tower")
+            towerInContact = null;
     }
 }

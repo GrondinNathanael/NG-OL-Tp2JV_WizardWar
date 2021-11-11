@@ -105,6 +105,7 @@ public class WizardStateNormal : WizardState
         if (healthPoints.hp <= 0)
         {
             healthPoints.die();
+            GameManager.instance.decreaseWizardNb(color);
         }
     }
 
