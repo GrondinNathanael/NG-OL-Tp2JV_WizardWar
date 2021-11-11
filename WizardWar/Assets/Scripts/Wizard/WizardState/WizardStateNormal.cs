@@ -12,6 +12,8 @@ public class WizardStateNormal : WizardState
         isInBattle = false;
         wizardRateOfFire = 2f;
         wizardDamage = Random.Range(1, 10);
+        wizardHealthRegenNumber = 1;
+        wizardHealthRegenRate = 0f;
     }
 
     // Update is called once per frame
@@ -21,6 +23,8 @@ public class WizardStateNormal : WizardState
         MoveWizard();
         ManageBattle();
         ManageStateChange();
+        ManageDeath();
+        ManageHealthRegen();
     }
 
     public override void ManageStateChange()
@@ -37,6 +41,7 @@ public class WizardStateNormal : WizardState
             return;
         }
 
+
         for (int i = 0; i < GameManager.instance.getTowerList(ennemyColor).Count; i++)
         {
 
@@ -46,9 +51,9 @@ public class WizardStateNormal : WizardState
         }
     }
 
-    private void ManageIsInBattle()
+    public override void ManageIsInBattle()
     {
-        for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
+        for (int i = 0; i < GameManager.instance.getTowerList(ennemyColor).Count; i++)
         {
             if (Vector2.Distance(transform.position, GameManager.instance.getTowerList(ennemyColor)[i].transform.position) < wizardRange)
             {
@@ -56,8 +61,12 @@ public class WizardStateNormal : WizardState
                 wizardTarget = GameManager.instance.getTowerList(ennemyColor)[i];
                 return;
             }
+        }
 
-            else if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
+        for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
+        {
+
+            if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
             {
                 isInBattle = true;
                 wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
@@ -74,11 +83,44 @@ public class WizardStateNormal : WizardState
     {
         if (isInBattle)
         {
-            wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+            if (wizardRateOfFire >= 3f)
+            {
+
+                wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                wizardRateOfFire = 0f;
+            }
+            else
+            {
+                wizardRateOfFire += Time.deltaTime;
+            }
         }
-        else if (!wizardTarget.activeSelf || wizardTarget == null) 
+        else if (wizardTarget == null)
         {
             isInBattle = false;
+        }
+    }
+
+    public override void ManageDeath()
+    {
+        if (healthPoints.hp <= 0)
+        {
+            healthPoints.die();
+        }
+    }
+
+    public override void ManageHealthRegen()
+    {
+        if (!isInBattle)
+        {
+            if (wizardHealthRegenRate >= 1)
+            {
+                healthPoints.getHealed(wizardHealthRegenNumber);
+                wizardHealthRegenRate = 0f;
+            }
+            else
+            {
+                wizardHealthRegenRate += Time.deltaTime;
+            }
         }
     }
 }

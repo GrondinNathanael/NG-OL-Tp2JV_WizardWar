@@ -6,7 +6,8 @@ public class HealthPoints : MonoBehaviour
 {
     [SerializeField] private int maxHp = 50;
 
-    private int hp;
+    // change back to private
+    public int hp;
     // Start is called before the first frame update
     void Start()
     {

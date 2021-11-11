@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1095471018257934046}
   - component: {fileID: 2157595253633634787}
+  - component: {fileID: 2900344652457132252}
   - component: {fileID: 7030853887301610598}
   m_Layer: 0
   m_Name: BlueTower
@@ -83,6 +84,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2900344652457132252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8878246157550824594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4917053f4af5265488e85b1a41c6288d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7030853887301610598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,3 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 50
+  hp: 0
