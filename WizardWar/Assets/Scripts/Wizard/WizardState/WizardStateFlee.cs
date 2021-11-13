@@ -7,7 +7,8 @@ public class WizardStateFlee : WizardState
     private const float WIZARD_FLEE_SPEED = 3f;
     private const int WIZRAD_FLEE_HEALTH_REGEN = 1;
     private const float WIZARD_FLEE_REGEN_RATE = 4f;
-    private GameObject placeToGo;
+    private Transform placeToGo;
+    private Transform placeToFlee;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,18 +20,38 @@ public class WizardStateFlee : WizardState
         wizardHealthRegenNumber = WIZRAD_FLEE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
         isInForest = false;
+        SetPlaceToFlee();
+    }
+
+    private void SetPlaceToFlee()
+    {
+        if (wizardManager.getTowerInContact() != null)
+        {
+            placeToFlee = wizardManager.getTowerInContact();
+        }
+        else if (wizardManager.getForestInContact() != null)
+        {
+            placeToFlee = wizardManager.getForestInContact();
+        }
+        else
+        {
+            placeToFlee = transform;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        MoveWizard();
+        ManageDeath();
+        ManageHealthRegen();
+        ManageStateChange();
     }
 
     public override void MoveWizard()
     {
         DecideWhereToGo();
-        transform.position = Vector3.MoveTowards(transform.position, placeToGo.transform.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, placeToGo.position, speed * Time.deltaTime);
     }
 
     private void DecideWhereToGo()
@@ -38,21 +59,27 @@ public class WizardStateFlee : WizardState
         float shortestDistance = 0;
         foreach (GameObject tower in GameManager.instance.getTowerList(color))
         {
-            float distance = Vector2.Distance(transform.position, tower.transform.position);
-            if (distance < shortestDistance || shortestDistance == 0)
+            if(tower.transform.position != placeToFlee.position)
             {
-                shortestDistance = distance;
-                placeToGo = tower;
+                float distance = Vector3.Distance(transform.position, tower.transform.position);
+                if (distance < shortestDistance || shortestDistance == 0)
+                {
+                    shortestDistance = distance;
+                    placeToGo = tower.transform;
+                }
             }
         }
 
         foreach (GameObject forest in GameManager.instance.getForestList(color))
         {
-            float distance = Vector2.Distance(transform.position, forest.transform.position);
-            if (distance < shortestDistance || shortestDistance == 0)
+            if (forest.transform.position != placeToFlee.position)
             {
-                shortestDistance = distance;
-                placeToGo = forest;
+                float distance = Vector3.Distance(transform.position, forest.transform.position);
+                if (distance < shortestDistance || shortestDistance == 0)
+                {
+                    shortestDistance = distance;
+                    placeToGo = forest.transform;
+                }
             }
         }
     }
