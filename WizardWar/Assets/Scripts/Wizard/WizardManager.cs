@@ -61,22 +61,22 @@ public class WizardManager : MonoBehaviour
                 }
             case WizardStateToSwitch.Flee:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateFlee>() as WizardStateFlee;
+                    wizardState = gameObject.AddComponent<WizardStateFlee>() as WizardStateFlee;
                     break;
                 }
             case WizardStateToSwitch.Hiding:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateHiding>() as WizardStateHiding;
+                    wizardState = gameObject.AddComponent<WizardStateHiding>() as WizardStateHiding;
                     break;
                 }
             case WizardStateToSwitch.Safe:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateSafe>() as WizardStateSafe;
+                    wizardState = gameObject.AddComponent<WizardStateSafe>() as WizardStateSafe;
                     break;
                 }
             case WizardStateToSwitch.Inactive:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateInactive>() as WizardStateInactive;
+                    wizardState = gameObject.AddComponent<WizardStateInactive>() as WizardStateInactive;
                     break;
                 }
         }

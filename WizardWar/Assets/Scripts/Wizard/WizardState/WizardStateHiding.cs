@@ -35,6 +35,11 @@ public class WizardStateHiding : WizardState
         ManageDeath();
         ManageHealthRegen();
         ManageStateChange();
+
+        if (isStateShowInConsole)
+        {
+            Debug.Log("État en planque");
+        }
     }
 
     public override void MoveWizard()

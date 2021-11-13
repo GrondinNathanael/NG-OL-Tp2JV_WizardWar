@@ -19,6 +19,8 @@ public abstract class WizardState : MonoBehaviour
     protected string ennemyColor;
     protected GameObject wizardTarget;
 
+    [SerializeField] protected bool isStateShowInConsole;
+
     // Start is called before the first frame update
     void Awake()
     {

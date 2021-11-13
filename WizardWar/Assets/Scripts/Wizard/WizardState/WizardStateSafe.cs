@@ -21,7 +21,10 @@ public class WizardStateSafe : WizardState
     // Update is called once per frame
     void Update()
     {
-        
+        if (isStateShowInConsole)
+        {
+            Debug.Log("État en sureté");
+        }
     }
 
     public override void MoveWizard()

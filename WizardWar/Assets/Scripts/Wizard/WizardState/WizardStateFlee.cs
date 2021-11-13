@@ -50,6 +50,11 @@ public class WizardStateFlee : WizardState
         ManageDeath();
         ManageHealthRegen();
         ManageStateChange();
+
+        if (isStateShowInConsole)
+        {
+            Debug.Log("État en fuite");
+        }
     }
 
     public override void MoveWizard()

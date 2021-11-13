@@ -48,6 +48,11 @@ public class WizardStateIntrepid : WizardState
         ManageStateChange();
         ManageDeath();
         ManageHealthRegen();
+
+        if (isStateShowInConsole)
+        {
+            Debug.Log("État intrépide");
+        }
     }
     public override void ManageBattle()
     {

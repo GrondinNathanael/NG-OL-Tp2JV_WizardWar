@@ -12,6 +12,7 @@ public class WizardStateNormal : WizardState
     private const float FOREST_SPEED_REDUCTION = 0.5f;
     private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
     private const int NUMBER_OF_KILL_TO_INTREPID = 3;
+    private const float FLEE_HEALTH_THRESHOLD = 0.25f;
     private float wizardBaseDamage;
 
     // Start is called before the first frame update
@@ -42,7 +43,10 @@ public class WizardStateNormal : WizardState
         ManageDeath();
         ManageHealthRegen();
 
-        Debug.Log(numberOfKills);
+        if (isStateShowInConsole) 
+        {
+            Debug.Log("État normal");
+        }
     }
 
     public override void ManageStateChange()
@@ -50,6 +54,10 @@ public class WizardStateNormal : WizardState
         if (numberOfKills >= NUMBER_OF_KILL_TO_INTREPID)
         {
             wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Intrepid);
+        }
+        else if (healthPoints.getHp() < (healthPoints.getMaxHp() * FLEE_HEALTH_THRESHOLD)) 
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Flee);
         }
         else if (GameManager.instance.didSomeoneWin())
         {
