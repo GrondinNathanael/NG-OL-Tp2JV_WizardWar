@@ -5,6 +5,7 @@ using UnityEngine;
 public class WizardStateFlee : WizardState
 {
     private const float WIZARD_FLEE_SPEED = 3f;
+    private const float FOREST_SPEED_REDUCTION = 0.5f;
     private const int WIZRAD_FLEE_HEALTH_REGEN = 1;
     private const float WIZARD_FLEE_REGEN_RATE = 4f;
     private Transform placeToGo;
@@ -41,9 +42,9 @@ public class WizardStateFlee : WizardState
     // Update is called once per frame
     void Update()
     {
-        if (wizardManager.getForestInContact() != null)
+        if (wizardManager.getForestInContact() != null && speed == WIZARD_FLEE_SPEED)
             decreaseWizardStatsInForest();
-        else
+        else if (wizardManager.getForestInContact() == null)
             resetWizardStats();
         MoveWizard();
         ManageDeath();
@@ -136,7 +137,7 @@ public class WizardStateFlee : WizardState
 
     private void resetWizardStats()
     {
-        speed = WIZARD_BASE_SPEED;
+        speed = WIZARD_FLEE_SPEED;
     }
 
     private void decreaseWizardStatsInForest()

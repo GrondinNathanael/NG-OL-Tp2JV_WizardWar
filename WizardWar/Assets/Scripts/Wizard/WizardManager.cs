@@ -56,7 +56,7 @@ public class WizardManager : MonoBehaviour
                 }
             case WizardStateToSwitch.Intrepid:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateIntrepid>() as WizardStateIntrepid;
+                    wizardState = gameObject.AddComponent<WizardStateIntrepid>() as WizardStateIntrepid;
                     break;
                 }
             case WizardStateToSwitch.Flee:
