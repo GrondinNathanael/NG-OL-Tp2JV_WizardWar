@@ -41,6 +41,10 @@ public class WizardStateFlee : WizardState
     // Update is called once per frame
     void Update()
     {
+        if (wizardManager.getForestInContact() != null)
+            decreaseWizardStatsInForest();
+        else
+            resetWizardStats();
         MoveWizard();
         ManageDeath();
         ManageHealthRegen();
@@ -128,5 +132,15 @@ public class WizardStateFlee : WizardState
 
     public override void ManageIsInBattle()
     {
+    }
+
+    private void resetWizardStats()
+    {
+        speed = WIZARD_BASE_SPEED;
+    }
+
+    private void decreaseWizardStatsInForest()
+    {
+        speed *= FOREST_SPEED_REDUCTION;
     }
 }

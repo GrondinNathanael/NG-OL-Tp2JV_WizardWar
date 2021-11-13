@@ -11,7 +11,7 @@ public class WizardStateHiding : WizardState
     private const float WIZARD_HIDING_RATE_OF_FIRE = 3f;
     private const int WIZARD_MAX_ATTACK = 5;
     private const int WIZARD_MIN_ATTACK = 1;
-    private const int WIZRAD_HIDING_HEALTH_REGEN = 3;
+    private const int WIZRAD_HIDING_HEALTH_REGEN = 2;
     private const float WIZARD_HIDING_REGEN_RATE = 1f;
     private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
 
