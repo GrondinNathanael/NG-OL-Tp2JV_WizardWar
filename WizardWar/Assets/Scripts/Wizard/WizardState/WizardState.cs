@@ -14,7 +14,6 @@ public abstract class WizardState : MonoBehaviour
     protected float wizardDamage;
     protected float wizardHealthRegenRate;
     protected int wizardHealthRegenNumber;
-    protected bool isInForest;
     protected enum wizardColors { GREEN, BLUE };
     protected string color;
     protected string ennemyColor;

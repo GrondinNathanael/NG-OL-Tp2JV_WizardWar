@@ -90,6 +90,7 @@ public class WizardStateFlee : WizardState
         {
             healthPoints.die();
             GameManager.instance.decreaseWizardNb(color);
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Normal);
         }
     }
 

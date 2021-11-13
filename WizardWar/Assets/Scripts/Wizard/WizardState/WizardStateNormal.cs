@@ -23,7 +23,6 @@ public class WizardStateNormal : WizardState
         wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
         wizardHealthRegenNumber = WIZRAD_BASE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
-        isInForest = false;
         wizardBaseDamage = wizardDamage;
     }
 
