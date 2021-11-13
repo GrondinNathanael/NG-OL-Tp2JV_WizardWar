@@ -29,6 +29,10 @@ public class WizardStateNormal : WizardState
     // Update is called once per frame
     void Update()
     {
+        if (wizardManager.getForestInContact() != null)
+            decreaseWizardStatsInForest();
+        else
+            resetWizardStats();
         ManageIsInBattle();
         MoveWizard();
         ManageBattle();
@@ -94,8 +98,10 @@ public class WizardStateNormal : WizardState
         {
             if (wizardRateOfFire >= WIZARD_BASE_RATE_OF_FIRE)
             {
-
-                wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                if (wizardTarget.GetComponent<WizardManager>().getForestInContact() != null)
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                else
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage * WIZARD_DAMAGE_REDUCTION);
                 wizardRateOfFire = 0f;
             }
             else
@@ -134,31 +140,13 @@ public class WizardStateNormal : WizardState
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.transform.tag == "Bush")
-        {
-            decreaseWizardStatsInForest();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.tag == "Bush")
-        {
-            resetWizardStats();
-        }
-    }
-
     private void resetWizardStats()
     {
         speed = WIZARD_BASE_SPEED;
-        wizardDamage = wizardBaseDamage;
     }
 
     private void decreaseWizardStatsInForest()
     {
         speed *= FOREST_SPEED_REDUCTION;
-        wizardDamage *= WIZARD_DAMAGE_REDUCTION;
     }
 }

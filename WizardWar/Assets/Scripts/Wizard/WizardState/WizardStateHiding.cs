@@ -14,7 +14,6 @@ public class WizardStateHiding : WizardState
     private const int WIZRAD_HIDING_HEALTH_REGEN = 3;
     private const float WIZARD_HIDING_REGEN_RATE = 1f;
     private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
-    private float wizardBaseDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +25,6 @@ public class WizardStateHiding : WizardState
         wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
         wizardHealthRegenNumber = WIZRAD_HIDING_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
-        isInForest = false;
-        wizardBaseDamage = wizardDamage;
     }
 
     // Update is called once per frame
@@ -68,8 +65,10 @@ public class WizardStateHiding : WizardState
         {
             if (wizardRateOfFire >= WIZARD_HIDING_RATE_OF_FIRE)
             {
-
-                wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                if(wizardTarget.GetComponent<WizardManager>().getForestInContact() != null)
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                else
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage * WIZARD_DAMAGE_REDUCTION);
                 wizardRateOfFire = 0f;
             }
             else

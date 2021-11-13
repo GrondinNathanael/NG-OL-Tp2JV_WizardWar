@@ -19,7 +19,6 @@ public class WizardStateFlee : WizardState
         wizardDamage = 0;
         wizardHealthRegenNumber = WIZRAD_FLEE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
-        isInForest = false;
         SetPlaceToFlee();
     }
 
