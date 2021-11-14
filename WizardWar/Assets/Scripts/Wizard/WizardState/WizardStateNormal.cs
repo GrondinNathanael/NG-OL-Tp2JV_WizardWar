@@ -13,7 +13,7 @@ public class WizardStateNormal : WizardState
     private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
     private const int NUMBER_OF_KILL_TO_INTREPID = 3;
     private const float FLEE_HEALTH_THRESHOLD = 0.25f;
-    private float wizardBaseDamage;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,6 @@ public class WizardStateNormal : WizardState
         wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
         wizardHealthRegenNumber = WIZRAD_BASE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
-        wizardBaseDamage = wizardDamage;
         numberOfKills = 0;
     }
 
@@ -33,9 +32,14 @@ public class WizardStateNormal : WizardState
     void Update()
     {
         if (wizardManager.getForestInContact() != null && speed == WIZARD_BASE_SPEED)
+        {
             decreaseWizardStatsInForest();
+        }
         else if (wizardManager.getForestInContact() == null)
+        {
             resetWizardStats();
+        }
+
         ManageIsInBattle();
         MoveWizard();
         ManageBattle();

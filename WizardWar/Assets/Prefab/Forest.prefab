@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5881508734785327214}
   - component: {fileID: 7056498993442291389}
-  - component: {fileID: 8485536961517777152}
+  - component: {fileID: 5596100742609779880}
   m_Layer: 0
   m_Name: Forest
   m_TagString: Bush
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8485536961517777152
+--- !u!61 &5596100742609779880
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

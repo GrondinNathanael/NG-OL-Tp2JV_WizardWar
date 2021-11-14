@@ -37,13 +37,13 @@ public abstract class WizardState : MonoBehaviour
         }
 
         healthPoints = GetComponent<HealthPoints>();
-
+        isStateShowInConsole = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public abstract void MoveWizard();

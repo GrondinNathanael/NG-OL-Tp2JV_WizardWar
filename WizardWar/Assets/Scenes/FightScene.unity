@@ -504,7 +504,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8485536961517777152, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
 --- !u!4 &477177729 stripped
 Transform:
@@ -811,7 +811,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8485536961517777152, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
 --- !u!4 &1167026755 stripped
 Transform:
@@ -946,7 +946,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8485536961517777152, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
 --- !u!4 &1254521439 stripped
 Transform:
@@ -1625,6 +1625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 5596100742609779880, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+      propertyPath: m_AutoTiling
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5881508734785327214, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1669,8 +1673,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8485536961517777152, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+    - target: {fileID: 7056498993442291389, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056498993442291389, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c233f8c6c008dcf409cd640ab4494f05, type: 3}
 --- !u!4 &5637257211609170814 stripped
 Transform:
@@ -1800,6 +1811,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2908571913368564508, guid: 27e90ff4ef63f9e4f8d73313cf20ac2f, type: 3}
+      propertyPath: isStateShowInConsole
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6093084367329476035, guid: 27e90ff4ef63f9e4f8d73313cf20ac2f, type: 3}
       propertyPath: m_Name
       value: WizardGreen
@@ -1871,6 +1886,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6802570005104008024, guid: 315f08978f811694da3e02547f28b108, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519972545309534503, guid: 315f08978f811694da3e02547f28b108, type: 3}
+      propertyPath: isStateShowInConsole
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -13,7 +13,6 @@ public class WizardStateIntrepid : WizardState
     private const float WIZARD_BASE_REGEN_RATE = 1f;
     private const int WIZARD_MAX_ATTACK = 5;
     private const int WIZARD_MIN_ATTACK = 1;
-    private float wizardBaseDamage;
     private bool isAttackedByEnnemy = false;
     private float tempHealth;
 
@@ -26,16 +25,12 @@ public class WizardStateIntrepid : WizardState
         wizardRateOfFire = WIZARD_BASE_RATE_OF_FIRE;
         wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
         wizardHealthRegenRate = 0f;
-        wizardBaseDamage = wizardDamage;
         tempHealth = healthPoints.getHp();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("is in intrepid state");
-        Debug.Log(isAttackedByEnnemy);
-
         if (wizardManager.getForestInContact() != null && speed == INTREPID_BASE_SPEED)
             decreaseWizardStatsInForest();
         else if (wizardManager.getForestInContact() == null)
@@ -60,7 +55,21 @@ public class WizardStateIntrepid : WizardState
         {
             if (wizardRateOfFire >= WIZARD_BASE_RATE_OF_FIRE)
             {
-                wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                if (wizardTarget.tag != "Tower")
+                {
+                    if (wizardTarget.GetComponent<WizardManager>().getForestInContact() != null)
+                    {
+                        wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                    }
+                    else
+                    {
+                        wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage * WIZARD_DAMAGE_REDUCTION);
+                    }
+                }
+                else
+                {
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                }
                 wizardRateOfFire = 0f;
 
             }
