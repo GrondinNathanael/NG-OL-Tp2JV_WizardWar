@@ -43,6 +43,9 @@ public class WizardStateInactive : WizardState
     // Update is called once per frame
     void Update()
     {
-        
+        if (isStateInConsole)
+        {
+            Debug.Log("État inactif");
+        }
     }
 }

@@ -21,7 +21,13 @@ public class WizardStateSafe : WizardState
     // Update is called once per frame
     void Update()
     {
-        
+        if (isStateInConsole)
+        {
+            Debug.Log("État en sureté");
+        }
+
+        ManageHealthRegen();
+        ManageStateChange();
     }
 
     public override void MoveWizard()
@@ -42,18 +48,17 @@ public class WizardStateSafe : WizardState
 
     public override void ManageHealthRegen()
     {
-        if (!isInBattle)
+
+        if (wizardHealthRegenRate >= WIZARD_SAFE_REGEN_RATE)
         {
-            if (wizardHealthRegenRate >= WIZARD_SAFE_REGEN_RATE)
-            {
-                healthPoints.getHealed(wizardHealthRegenNumber);
-                wizardHealthRegenRate = 0f;
-            }
-            else
-            {
-                wizardHealthRegenRate += Time.deltaTime;
-            }
+            healthPoints.getHealed(wizardHealthRegenNumber);
+            wizardHealthRegenRate = 0f;
         }
+        else
+        {
+            wizardHealthRegenRate += Time.deltaTime;
+        }
+
     }
 
     public override void ManageStateChange()

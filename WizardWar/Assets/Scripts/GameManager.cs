@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,7 +53,8 @@ public class GameManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Destroy(gameObject);
+            Destroy(instance.gameObject);
+            instance = this;
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -87,6 +89,9 @@ public class GameManager : MonoBehaviour
                 increaseWizardNb(GREEN_COLOR);
             }
         }
+
+        resetScene();
+        exitScene();
     }
 
     private float setRandomSpawnCooldown(float cooldown)
@@ -258,10 +263,26 @@ public class GameManager : MonoBehaviour
 
     public bool didSomeoneWin()
     {
-        if(winningTeam != ColorsWinSide.None)
+        if (winningTeam != ColorsWinSide.None)
         {
             return true;
         }
         return false;
+    }
+
+    private void resetScene()
+    {
+        if (Input.GetButtonDown("Submit"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    private void exitScene()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Application.Quit();
+        }
     }
 }

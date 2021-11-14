@@ -19,6 +19,9 @@ public abstract class WizardState : MonoBehaviour
     protected string ennemyColor;
     protected GameObject wizardTarget;
 
+    [SerializeField] protected bool isStateShowInConsole;
+    protected static bool isStateInConsole;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,13 +38,13 @@ public abstract class WizardState : MonoBehaviour
         }
 
         healthPoints = GetComponent<HealthPoints>();
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public abstract void MoveWizard();

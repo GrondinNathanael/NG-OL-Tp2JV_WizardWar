@@ -11,7 +11,9 @@ public class WizardStateNormal : WizardState
     private const float WIZARD_BASE_REGEN_RATE = 1f;
     private const float FOREST_SPEED_REDUCTION = 0.5f;
     private const float WIZARD_DAMAGE_REDUCTION = 0.80f;
-    private float wizardBaseDamage;
+    private const int NUMBER_OF_KILL_TO_INTREPID = 3;
+    private const float FLEE_HEALTH_THRESHOLD = 0.25f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,33 +25,53 @@ public class WizardStateNormal : WizardState
         wizardDamage = Random.Range(WIZARD_MIN_ATTACK, WIZARD_MAX_ATTACK);
         wizardHealthRegenNumber = WIZRAD_BASE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
-        wizardBaseDamage = wizardDamage;
+        numberOfKills = 0;
+        isStateInConsole = isStateShowInConsole;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (wizardManager.getForestInContact() != null)
+        if (wizardManager.getForestInContact() != null && speed == WIZARD_BASE_SPEED)
+        {
             decreaseWizardStatsInForest();
-        else
+        }
+        else if (wizardManager.getForestInContact() == null)
+        {
             resetWizardStats();
+        }
+
         ManageIsInBattle();
         MoveWizard();
         ManageBattle();
         ManageStateChange();
         ManageDeath();
         ManageHealthRegen();
+
+        if (isStateInConsole) 
+        {
+            Debug.Log("État normal");
+        }
     }
 
     public override void ManageStateChange()
     {
-
+        if (numberOfKills >= NUMBER_OF_KILL_TO_INTREPID)
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Intrepid);
+        }
+        else if (healthPoints.getHp() < (healthPoints.getMaxHp() * FLEE_HEALTH_THRESHOLD)) 
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Flee);
+        }
+        else if (GameManager.instance.didSomeoneWin())
+        {
+            wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Inactive);
+        }
     }
 
     public override void MoveWizard()
     {
-
-
         if (isInBattle)
         {
             return;
@@ -74,20 +96,25 @@ public class WizardStateNormal : WizardState
                 wizardTarget = GameManager.instance.getTowerList(ennemyColor)[i];
                 return;
             }
+
         }
 
         for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
         {
+            
 
             if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
             {
                 isInBattle = true;
                 wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
+
+                if (wizardTarget.GetComponent<WizardStateSafe>() != null) 
+                {
+                    isInBattle = false;
+                    wizardTarget = null;
+                }
+
                 return;
-            }
-            else
-            {
-                isInBattle = false;
             }
         }
     }
@@ -98,21 +125,36 @@ public class WizardStateNormal : WizardState
         {
             if (wizardRateOfFire >= WIZARD_BASE_RATE_OF_FIRE)
             {
-                if (wizardTarget.GetComponent<WizardManager>().getForestInContact() != null)
-                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                if (wizardTarget.tag != "Tower")
+                {
+                    if (wizardTarget.GetComponent<WizardManager>().getForestInContact() != null)
+                    {
+                        wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                    }
+                    else
+                    {
+                        wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage * WIZARD_DAMAGE_REDUCTION);
+                    }
+                }
                 else
-                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage * WIZARD_DAMAGE_REDUCTION);
+                {
+                    wizardTarget.GetComponent<HealthPoints>().getDamaged(wizardDamage);
+                }
                 wizardRateOfFire = 0f;
             }
             else
             {
                 wizardRateOfFire += Time.deltaTime;
             }
+
+            if (!wizardTarget.activeSelf || Vector2.Distance(transform.position, wizardTarget.transform.position) > wizardRange)
+            {
+                isTargetKilled();
+                isInBattle = false;
+            }
+
         }
-        else if (wizardTarget == null)
-        {
-            isInBattle = false;
-        }
+
     }
 
     public override void ManageDeath()
@@ -148,5 +190,13 @@ public class WizardStateNormal : WizardState
     private void decreaseWizardStatsInForest()
     {
         speed *= FOREST_SPEED_REDUCTION;
+    }
+
+    private void isTargetKilled()
+    {
+        if (!wizardTarget.activeSelf)
+        {
+            numberOfKills++;
+        }
     }
 }

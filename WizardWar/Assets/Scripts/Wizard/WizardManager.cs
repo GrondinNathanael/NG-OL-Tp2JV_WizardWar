@@ -56,27 +56,27 @@ public class WizardManager : MonoBehaviour
                 }
             case WizardStateToSwitch.Intrepid:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateIntrepid>() as WizardStateIntrepid;
+                    wizardState = gameObject.AddComponent<WizardStateIntrepid>() as WizardStateIntrepid;
                     break;
                 }
             case WizardStateToSwitch.Flee:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateFlee>() as WizardStateFlee;
+                    wizardState = gameObject.AddComponent<WizardStateFlee>() as WizardStateFlee;
                     break;
                 }
             case WizardStateToSwitch.Hiding:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateHiding>() as WizardStateHiding;
+                    wizardState = gameObject.AddComponent<WizardStateHiding>() as WizardStateHiding;
                     break;
                 }
             case WizardStateToSwitch.Safe:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateSafe>() as WizardStateSafe;
+                    wizardState = gameObject.AddComponent<WizardStateSafe>() as WizardStateSafe;
                     break;
                 }
             case WizardStateToSwitch.Inactive:
                 {
-                    //wizardState = gameObject.AddComponent<WizardStateInactive>() as WizardStateInactive;
+                    wizardState = gameObject.AddComponent<WizardStateInactive>() as WizardStateInactive;
                     break;
                 }
         }
@@ -94,12 +94,12 @@ public class WizardManager : MonoBehaviour
 
     public Transform getTowerInContact()
     {
-        return forestInContact;
+        return towerInContact;
     }
 
     public void quitTower()
     {
-        forestInContact = null;
+        towerInContact = null;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
