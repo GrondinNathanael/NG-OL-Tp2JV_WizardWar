@@ -51,7 +51,7 @@ public class WizardStateFlee : WizardState
         ManageHealthRegen();
         ManageStateChange();
 
-        if (isStateShowInConsole)
+        if (isStateInConsole)
         {
             Debug.Log("État en fuite");
         }
@@ -59,8 +59,10 @@ public class WizardStateFlee : WizardState
 
     public override void MoveWizard()
     {
+        
         DecideWhereToGo();
-        transform.position = Vector3.MoveTowards(transform.position, placeToGo.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, placeToGo.position, speed * Time.deltaTime);
+        
     }
 
     private void DecideWhereToGo()

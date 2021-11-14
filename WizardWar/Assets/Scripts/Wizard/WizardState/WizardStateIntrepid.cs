@@ -44,7 +44,7 @@ public class WizardStateIntrepid : WizardState
         ManageDeath();
         ManageHealthRegen();
 
-        if (isStateShowInConsole)
+        if (isStateInConsole)
         {
             Debug.Log("État intrépide");
         }
@@ -129,6 +129,13 @@ public class WizardStateIntrepid : WizardState
                     {
                         isInBattle = true;
                         wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
+
+                        if (wizardTarget.GetComponent<WizardStateSafe>() != null)
+                        {
+                            isInBattle = false;
+                            wizardTarget = null;
+                        }
+
                         return;
                     }
                 }

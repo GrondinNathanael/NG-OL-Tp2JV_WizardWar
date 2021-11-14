@@ -36,7 +36,7 @@ public class WizardStateHiding : WizardState
         ManageHealthRegen();
         ManageStateChange();
 
-        if (isStateShowInConsole)
+        if (isStateInConsole)
         {
             Debug.Log("État en planque");
         }
@@ -55,6 +55,13 @@ public class WizardStateHiding : WizardState
             {
                 isInBattle = true;
                 wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
+                
+                if (wizardTarget.GetComponent<WizardStateSafe>() != null)
+                {
+                    isInBattle = false;
+                    wizardTarget = null;
+                }
+
                 return;
             }
             else
@@ -123,7 +130,7 @@ public class WizardStateHiding : WizardState
         {
             wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Normal);
         }
-        else if(healthPoints.getHp() <= healthPoints.getMaxHp() * hpPercentToReturnToFlee)
+        else if(healthPoints.getHp() <= healthPoints.getMaxHp() * hpPercentToReturnToFlee && isInBattle)
         {
             wizardManager.ChangeWizardState(WizardManager.WizardStateToSwitch.Flee);
         }

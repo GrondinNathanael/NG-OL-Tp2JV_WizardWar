@@ -94,12 +94,12 @@ public class WizardManager : MonoBehaviour
 
     public Transform getTowerInContact()
     {
-        return forestInContact;
+        return towerInContact;
     }
 
     public void quitTower()
     {
-        forestInContact = null;
+        towerInContact = null;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

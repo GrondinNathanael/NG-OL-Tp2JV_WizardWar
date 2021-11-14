@@ -20,6 +20,7 @@ public abstract class WizardState : MonoBehaviour
     protected GameObject wizardTarget;
 
     [SerializeField] protected bool isStateShowInConsole;
+    protected static bool isStateInConsole;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,7 +38,7 @@ public abstract class WizardState : MonoBehaviour
         }
 
         healthPoints = GetComponent<HealthPoints>();
-        isStateShowInConsole = true;
+        
     }
 
     // Update is called once per frame

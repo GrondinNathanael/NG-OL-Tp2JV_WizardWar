@@ -26,6 +26,7 @@ public class WizardStateNormal : WizardState
         wizardHealthRegenNumber = WIZRAD_BASE_HEALTH_REGEN;
         wizardHealthRegenRate = 0f;
         numberOfKills = 0;
+        isStateInConsole = isStateShowInConsole;
     }
 
     // Update is called once per frame
@@ -47,7 +48,7 @@ public class WizardStateNormal : WizardState
         ManageDeath();
         ManageHealthRegen();
 
-        if (isStateShowInConsole) 
+        if (isStateInConsole) 
         {
             Debug.Log("État normal");
         }
@@ -100,11 +101,19 @@ public class WizardStateNormal : WizardState
 
         for (int i = 0; i < GameManager.instance.getEnnemyList(ennemyColor).Length; i++)
         {
+            
 
             if (Vector2.Distance(transform.position, GameManager.instance.getEnnemyList(ennemyColor)[i].transform.position) < wizardRange && GameManager.instance.getEnnemyList(ennemyColor)[i].activeSelf)
             {
                 isInBattle = true;
                 wizardTarget = GameManager.instance.getEnnemyList(ennemyColor)[i];
+
+                if (wizardTarget.GetComponent<WizardStateSafe>() != null) 
+                {
+                    isInBattle = false;
+                    wizardTarget = null;
+                }
+
                 return;
             }
         }
